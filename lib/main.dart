@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_app/LocalDatabase.dart';
 
 void main() {
   runApp(const MyApp());
@@ -119,7 +120,8 @@ class _TaskManagerScreenState extends State<TaskManagerScreen> {
     super.dispose();
   }
 
-  void _onAddPressed() {
+  void _onAddPressed() async {
+    await LocalDatabase().addDataLocally(title: _textFieldController.text);
     setState(() {
       _tasks.add(_textFieldController.text);
       _completedTasks++;

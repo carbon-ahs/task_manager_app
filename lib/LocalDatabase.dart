@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -7,6 +7,7 @@ Database? _database;
 
 class LocalDatabase {
   Future get database async {
+    // databaseFactory = databaseFactoryFfi;
     if (_database != null) {
       return _database;
     }
@@ -25,14 +26,15 @@ class LocalDatabase {
       CREATE TABLE todo(
         id INTEGER PRIMARY KEY,
         title TEXT,
-        is_done BOOLEAN default false,
+        is_done BOOLEAN default false
       )
     ''');
   }
 
-  Future addDataLocally({Name}) async {
+  Future addDataLocally({title}) async {
     final db = await database;
-    await db.insert('todo', {'title': Name});
+    await db.insert('todo', {'title': title});
+    print('added : $title');
     return 'added';
   }
 }
